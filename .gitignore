@@ -1,0 +1,36 @@
+# 저작권 보호 자료 (원본 및 파생물)
+*.pdf
+pages/
+sample_page.html
+
+# 크롤링/OCR 결과 (저작권 있는 가사 포함)
+crawler/data/
+가사.json
+가사_sample.json
+가사_1to20_결과.md
+
+# 로컬 설정 (개인별 퍼미션 포함 가능)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# 임시 파일
+*.tmp
+*.bak
+*.log
