@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>성가 선곡 어시스턴트</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>성가 선곡 어시스턴트</h1>
+    <nav class="header-nav">
+      <a href="/">← 홈</a>
+      <a href="/editor/" target="_blank" rel="noopener">가사 편집기 ↗</a>
+      <div id="status" class="status idle">🟢 대기 중</div>
+    </nav>
+  </header>
+
+  <main>
+    <aside id="sidebar">
+      <div class="sidebar-section">
+        <label for="client-name">이름</label>
+        <input id="client-name" type="text" placeholder="예: 주현" maxlength="20" />
+      </div>
+      <div class="sidebar-section">
+        <h2>스킬 바로가기</h2>
+        <div id="skills"></div>
+      </div>
+    </aside>
+
+    <section id="chat">
+      <div id="messages"></div>
+      <form id="compose">
+        <textarea
+          id="prompt"
+          placeholder="예: 5월 성가표 짜줘"
+          rows="3"
+          maxlength="2000"
+        ></textarea>
+        <div class="compose-actions">
+          <button type="button" id="interrupt-btn" disabled>중단</button>
+          <button type="submit" id="send-btn">보내기</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

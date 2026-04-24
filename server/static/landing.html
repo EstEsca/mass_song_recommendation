@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>성가 선곡 프로젝트</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, "Segoe UI", "Noto Sans KR", sans-serif;
+      background: linear-gradient(135deg, #eef2ff 0%, #f5f5f7 100%);
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    h1 { font-size: 28px; margin: 0 0 8px; }
+    p.lead { color: #555; margin: 0 0 40px; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 720px;
+      width: 100%;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid #e5e5ea;
+      transition: transform .15s, box-shadow .15s, border-color .15s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(67,56,202,0.12);
+      border-color: #c7d2fe;
+    }
+    .card h2 {
+      font-size: 18px;
+      margin: 0 0 6px;
+      color: #4338ca;
+    }
+    .card p {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .card .icon { font-size: 28px; margin-bottom: 10px; }
+    footer {
+      margin-top: 48px;
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <h1>성가 선곡 프로젝트</h1>
+  <p class="lead">원하는 도구를 고르세요.</p>
+  <div class="cards">
+    <a class="card" href="/assistant/">
+      <div class="icon">🎵</div>
+      <h2>성가 추천 어시스턴트</h2>
+      <p>전례 말씀 기반 주일 성가 추천, 곡목록 검증 등 스킬을 프롬프팅으로 실행합니다.</p>
+    </a>
+    <a class="card" href="/editor/">
+      <div class="icon">✏️</div>
+      <h2>가사 편집기</h2>
+      <p>songs.json의 가사와 검증 플래그를 직접 수정합니다.</p>
+    </a>
+  </div>
+  <footer>성가대 내부용 · URL을 공개 채널에 올리지 마세요</footer>
+</body>
+</html>
