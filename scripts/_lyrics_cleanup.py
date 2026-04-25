@@ -17,8 +17,11 @@
  (strip_music_notation은 remove_slashes보다 먼저 — 박자 `4/4`가 `4 4`로 쪼개지기 전에 잡아야 함)
 
 사용처:
-  - scripts/clean_lyrics.py   (/clean-lyrics 스킬)
-  - scripts/fix_lyrics_format.py  (deprecated, 이 모듈을 import)
+  - scripts/clean_lyrics.py   (/clean-lyrics 스킬, v2 — xlsx 직접 편집)
+  - scripts/fix_lyrics_format.py  (DEPRECATED — v2 미대응, 사용 금지)
+
+본 모듈 자체는 입출력이 모두 텍스트라 v1/v2 무관. 호출부에서 적절한 데이터를
+공급하기만 하면 된다.
 """
 
 from __future__ import annotations

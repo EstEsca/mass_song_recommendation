@@ -1,5 +1,16 @@
 """
-크롤러 결과를 songs.json에 in-place 병합.
+[DEPRECATED — v2 미대응 (2026-04-25~)] 크롤러 결과를 songs.json에 in-place 병합.
+
+⚠️ v2 SSoT가 data/source/곡정보.xlsx로 변경되었으므로 이 모듈은 더 이상 호출되어선 안 된다.
+   여기 정의된 `apply_lyrics`, `should_skip` 등은 v1 스키마(가사.본문, 가사.확보여부,
+   신뢰도, 외부ID)에 직접 쓰는 로직이라 v2 곡 객체에서는 KeyError 또는 잘못된 결과.
+
+   v2에서는 크롤러가 jsonl만 만들고, scripts/crawler/apply_to_xlsx.py가
+   사용자 검토 후 xlsx의 '가사' 시트에 적용한다.
+
+   본 파일은 레거시 호환 표면으로만 남김. 신규 호출 금지.
+
+----- 이하 원본 docstring (참고용, 현재 무효) -----
 
 병합 정책 (기본값):
   1. `사용자수정시각` 필드가 있으면 skip (사용자 수작업 보호)

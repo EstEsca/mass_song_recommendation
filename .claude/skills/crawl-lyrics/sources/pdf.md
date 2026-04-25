@@ -2,15 +2,26 @@
 id: C-002
 name: pdf
 base_url: source/청소년청년성가집.pdf  (로컬)
-status: active
+status: deprecated
 ---
 
-# 소스 전략: PDF 텍스트 추출 (로컬)
+# 소스 전략: PDF 텍스트 추출 (로컬) — DEPRECATED
+
+> ⚠️ **DEPRECATED (2026-04-25~) — v2 미대응**
+>
+> 이 소스를 사용하는 [extract-sheet-lyrics 스킬](../../extract-sheet-lyrics/SKILL.md)이
+> v2 스키마 미대응으로 deprecated 처리되었다. PDF 추출 결과는 v1 시절의 `절별` dict 출력 포맷을
+> 사용하는데, v2 가사는 단일 문자열이라 직접 호환되지 않는다.
+>
+> 향후 PDF 재추출이 필요해지면 `extract_pdf_lyrics_v3.py`를 v2 출력 포맷으로 리팩토링한 뒤
+> `apply_to_xlsx.py`로 곡정보.xlsx에 적용하는 흐름으로 재구성해야 한다.
+>
+> 현재 청소년청년성가집 PDF 추출 결과는 이미 v1 → v2 마이그레이션 시점에 곡정보.xlsx에 반영되어 있으므로
+> 추가 호출 가능성은 낮다.
 
 ## 개요
 청소년청년성가집 PDF 파일에서 텍스트 레이어를 위치 기반으로 파싱해 가사를 추출한다.
-외부 호출이 없고 robots.txt 무관. **최후의 수단**이 아니라 **번호 매칭 가능한 기본 수단**.
-OCR 아님 — 임베디드 텍스트 레이어만 사용.
+외부 호출이 없고 robots.txt 무관. OCR 아님 — 임베디드 텍스트 레이어만 사용.
 
 ## robots.txt
 - 해당 없음 (로컬 파일)

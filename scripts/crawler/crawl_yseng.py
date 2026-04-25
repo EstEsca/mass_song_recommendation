@@ -205,12 +205,12 @@ def parse_args(argv):
     import argparse
     p = argparse.ArgumentParser()
     p.add_argument("numbers", nargs="*", help="곡 번호 또는 범위 (예: 30-50 32 38)")
-    p.add_argument("--no-merge", action="store_true",
-                   help="jsonl만 생성, songs.json 병합 생략")
+    p.add_argument("--legacy-merge", action="store_true",
+                   help="[DEPRECATED — v2 미대응] 옛 v1 _merge 경로로 songs.json에 병합. v2에서는 결과가 망가지므로 사용 금지.")
     p.add_argument("--merge-only", action="store_true",
-                   help="크롤링 생략, jsonl → songs.json 병합만")
+                   help="[DEPRECATED] 크롤링 없이 옛 병합만. v2 미대응.")
     p.add_argument("--force", action="store_true",
-                   help="사용자 수정/타 소스 보호를 무시하고 덮어쓰기")
+                   help="(legacy-merge용) 보호 무시")
     p.add_argument("--fuzzy", action="store_true",
                    help="제목 완전 일치 실패 시, 후보가 1종(정규화 후)이면 근사 채택")
     return p.parse_args(argv)
@@ -223,9 +223,15 @@ def main():
     args = parse_args(sys.argv[1:])
     OUTPUT_DIR.mkdir(exist_ok=True)
 
-    if args.merge_only:
-        merge_into_songs_json(force=args.force)
-        return
+    if args.legacy_merge or args.merge_only:
+        print(
+            "⚠ --legacy-merge / --merge-only는 v2 미대응 (v1 스키마로 songs.json을 망친다).\n"
+            "  v2에서는 jsonl 생성 후 다음 명령으로 곡정보.xlsx에 적용:\n"
+            "      python scripts/crawler/apply_to_xlsx.py yseng\n"
+            "  그 후 `python scripts/rebuild.py`로 JSON 재빌드.",
+            file=sys.stderr,
+        )
+        raise SystemExit(2)
 
     targets = load_targets(args.numbers)
 
@@ -312,8 +318,11 @@ def main():
 
     print(f"\n완료. 성공 {hits} / 실패 {misses} / 에러 {errors} → {OUTPUT_FILE}")
 
-    if not args.no_merge:
-        merge_into_songs_json(force=args.force)
+    print(
+        "\n✅ jsonl 생성 완료. v2 적용 흐름:\n"
+        "   1) python scripts/crawler/apply_to_xlsx.py yseng    # 곡정보.xlsx 가사 시트에 반영\n"
+        "   2) python scripts/rebuild.py                         # songs.json/songs_index.json 재빌드"
+    )
 
 
 if __name__ == "__main__":

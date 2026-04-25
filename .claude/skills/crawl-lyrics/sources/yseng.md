@@ -56,26 +56,25 @@ maria에 없는 곡의 가사를 보완할 수 있는 유일한 합법적 소스
 
 ## 스크립트
 - 경로: `scripts/crawler/crawl_yseng.py`
-- 사용법:
-  - `python scripts/crawler/crawl_yseng.py 32 38 39 40-45 46 50` — 크롤링 + 자동 병합
-  - `python scripts/crawler/crawl_yseng.py --merge-only` — 기존 jsonl만 병합
-  - 옵션: `--no-merge`, `--force`
-  - 범위(`a-b`) 및 개별 번호 혼용 가능. 인자 없으면 `가사.확보여부=false` 전체 시도 (비권장)
+- 사용법 (v2):
+  - `python scripts/crawler/crawl_yseng.py 32 38 39 40-45 46 50` — 크롤링, **jsonl 생성만** (자동 병합 비활성화)
+  - `--legacy-merge` / `--merge-only` 옵션은 v2에서 차단됨 (호출 시 에러 + 안내)
+  - 범위(`a-b`) 및 개별 번호 혼용 가능
 - 출력: `scripts/crawler/data/yseng_sungga.jsonl` (append, resume 지원)
-  - 성공 레코드: `{번호, 제목, 작곡자, document_srl, url, 매칭방식, 가사, 수집시각}`
+  - 성공 레코드: `{번호, 제목, 작곡자, document_srl, url, 매칭방식, 가사, 수집시각}` (번호는 청소년청년성가집 번호)
   - 실패 레코드: `{번호, 제목, 실패원인, (후보)}`
 
-## songs.json 병합
-- 크롤러 자체가 `_merge.py` 헬퍼로 in-place 병합 수행
-- 매칭 키: `jsonl.번호` → `songs.json[번호]` (입력 시점의 곡 번호를 그대로 사용)
-- 갱신 필드: `가사.본문`, `가사.출처="yseng"`, `가사.참조URL=[/xe/sungga/{srl}]`,
-  `가사.수집시각`, `외부ID.yseng_document_srl=srl`
-- 보호 정책은 [SKILL.md § 병합 정책](../SKILL.md#병합-정책-공통) 참고
-  - 결과: **다른 소스가 이미 확보한 곡은 건드리지 않음** → maria 우선이 자연스럽게 보장
-  - maria 있는 곡을 yseng 버전으로 교체하려면 먼저 해당 레코드의 `가사` 블록을 비우거나 `--force` 사용
+## v2 적용 (jsonl → 곡정보.xlsx)
+- 적용 스크립트: `scripts/crawler/apply_to_xlsx.py yseng`
+- 매칭: jsonl의 `번호`(청소년청년성가집 번호) 직접 매칭 → 곡정보.xlsx의 `가사` 시트 같은 번호 행
+- 갱신 필드: 가사 본문(2열) — v2에서는 `출처`·`참조URL`·`외부ID` 등 부가 메타 폐기
+- 보호 정책:
+  - 이미 가사 셀이 채워진 행은 skip → maria/PDF 우선이 자연스럽게 유지됨
+  - `--force`로 덮어쓰기 가능
+- 적용 후: `python scripts/rebuild.py`로 songs.json·songs_index.json 재빌드
 
 ## 주의사항 / 알려진 이슈
 - 본문에 화성/박자 표기(`G 4/4 ♩=84`), 재편곡자명, 카페 링크 등이 섞여 있음 — 파서에서 1차 제거하되
-  `fix-lyrics-format` 스킬로 2차 정리 권장.
+  `/clean-lyrics` 스킬로 2차 정리 권장 (v2에서는 곡정보.xlsx의 가사 시트를 직접 정리).
 - 검색 결과에 공지성 글(`칸투스 파밀리아 유튜브 공개 성가` 등)이 섞이면 제외.
 - 같은 제목 복수 곡에 주의 (예: `길` 여러 건). 작곡자 비교 없이 자동 반영 금지.

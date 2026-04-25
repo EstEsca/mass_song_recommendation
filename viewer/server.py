@@ -1,7 +1,20 @@
 """
-viewer/server.py — songs.json 편집용 로컬 HTTP 서버.
+viewer/server.py — [DEPRECATED — v2 미대응 (2026-04-25~)] songs.json 편집용 로컬 HTTP 서버.
 
-사용:
+⚠️ v2 SSoT가 data/source/곡정보.xlsx로 변경되었으므로 이 단독 서버는 더 이상 사용하지 않는다.
+   - songs.json에 직접 쓰기 → v2에서는 빌드 산출물이라 다음 rebuild에 덮어쓰여짐
+   - 가사 4필드(본문/절별/절구조/참조URL) 편집 모델 → v2 가사는 단일 문자열
+   - 신뢰도/검증완료 필드 → v2에서 폐기됨
+
+   대신 server/app.py(FastAPI)를 사용하라. server/app.py는 v2 어댑터를 통해
+   viewer/index.html을 그대로 마운트한 상태로 곡정보.xlsx에 안전하게 쓰고 자동 rebuild를 호출한다.
+
+       python -m uvicorn server.app:app --reload   # 권장
+       /editor/  경로에 viewer/index.html이 마운트됨
+
+   본 파일은 호환성 유지용으로만 남기며, **단독 실행 금지**.
+
+사용 (레거시 — v1 시절 동작 설명):
     python viewer/server.py          # 기본 포트 8765
     python viewer/server.py 9000     # 임의 포트
 
@@ -10,6 +23,15 @@ viewer/server.py — songs.json 편집용 로컬 HTTP 서버.
     PUT  /api/songs/<번호>    — 해당 곡의 가사 필드 패치 + 사용자수정시각 기록
     GET  /...                 — viewer/ 디렉토리 정적 파일 (index.html 등)
 """
+import sys as _sys
+
+print(
+    "⚠ viewer/server.py는 DEPRECATED — v2 미대응.\n"
+    "  대신: python -m uvicorn server.app:app --reload\n"
+    "  편집기 경로: http://localhost:8000/editor/\n",
+    file=_sys.stderr,
+)
+_sys.exit(2)
 
 import json
 import os

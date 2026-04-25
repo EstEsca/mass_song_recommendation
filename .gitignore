@@ -1,13 +1,19 @@
 # 저작권 보호 자료 (원본 및 파생물)
 *.pdf
+source/
 pages/
-sample_page.html
+inbox/sample_page.html
 
 # 크롤링/OCR 결과 (저작권 있는 가사 포함)
-crawler/data/
-가사.json
-가사_sample.json
-가사_1to20_결과.md
+scripts/crawler/data/
+inbox/가사.json
+inbox/가사_sample.json
+inbox/가사_1to20_결과.md
+
+# v2 데이터 (가사 본문 포함, 저작권 보호)
+data/source/곡정보.xlsx
+data/songs.v1.bak.json
+data/songs_index.json
 
 # 로컬 설정 (개인별 퍼미션 포함 가능)
 .claude/settings.local.json

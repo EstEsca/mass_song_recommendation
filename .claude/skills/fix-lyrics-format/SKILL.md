@@ -1,22 +1,22 @@
 ---
 name: fix-lyrics-format
-description: "[DEPRECATED] 본문 정리는 /clean-lyrics, 절 구성 추론은 /structure-lyrics 사용 권장. 기존 호환용으로만 유지. 여전히 마커 변환/오염 제거/절구조 재생성을 한 번에 수행."
+description: "[DEPRECATED — v2 미대응] 본문 정리는 /clean-lyrics, 절 구성 추론은 /structure-lyrics 사용 권장. 기존 호환용으로만 유지."
 argument-hint: "곡 번호/범위 또는 전부"
-status: deprecated
 ---
 
 # 가사 형식 교정 스킬 (DEPRECATED)
 
-> ⚠️ **DEPRECATED (2026-04-24~)**
+> ⚠️ **DEPRECATED (2026-04-24~) + v2 스키마 미대응 (2026-04-25~)**
 >
-> 이 스킬은 책임이 섞여 있어 둘로 분리됐다:
-> - **본문 정리** (슬래시/오염/빈 줄/영문 잔존/짧은 절) → [`/clean-lyrics`](../clean-lyrics/SKILL.md)
-> - **절 구성 추론** (마커 부여, 경계 감지) → [`/structure-lyrics`](../structure-lyrics/SKILL.md) (DRAFT)
+> 이 스킬은 두 가지 이유로 더 이상 호출하지 말 것:
+>
+> 1. **책임 분리**: 본문 정리 → [`/clean-lyrics`](../clean-lyrics/SKILL.md), 절 구성 추론 → [`/structure-lyrics`](../structure-lyrics/SKILL.md)로 이미 분리됨
+> 2. **v2 스키마 비호환**: 교정 항목 X5(절구조 재생성)·X6(절별 dict 재생성)이 의존하는 `가사.절구조`·`가사.절별` 필드는 v2에서 폐기됨. 본 스크립트(`scripts/fix_lyrics_format.py`)는 v2에서 실행 시 KeyError 또는 잘못된 결과를 낸다.
 >
 > 신규 자동화는 `/clean-lyrics` + `/structure-lyrics`를 순서대로 사용하라.
-> 본 스킬과 `scripts/fix_lyrics_format.py`는 호환성 유지용으로만 남는다.
+> 본 스킬과 `scripts/fix_lyrics_format.py`는 호환성 유지용 표면만 남기며, **실행은 금지**.
 
-songs.json의 가사를 `docs/lyrics_format.md` 스펙에 맞게 자동 교정한다.
+songs.json의 가사를 `docs/spec/lyrics_format.md` 스펙에 맞게 자동 교정한다.
 **validate-lyrics-format의 위반 사항을 한 번에 수정하는 레거시 역할.**
 
 공용 정리 로직은 [scripts/_lyrics_cleanup.py](../../../scripts/_lyrics_cleanup.py)로 이관되어
@@ -36,7 +36,7 @@ songs.json의 가사를 `docs/lyrics_format.md` 스펙에 맞게 자동 교정�
 ## 데이터
 
 - 입력/출력: `data/songs.json` (직접 수정)
-- 참조: `docs/lyrics_format.md`
+- 참조: `docs/spec/lyrics_format.md`
 
 ## 실행
 

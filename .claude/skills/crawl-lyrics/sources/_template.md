@@ -20,12 +20,15 @@ status: draft  # draft | active | blocked | deprecated
 - 매칭 가능 예상 곡 수: N곡 / 495곡
 - 확인 근거: (대화/실측/공식 문서)
 
-## 매칭 키
-가장 신뢰할 수 있는 식별자부터 나열.
+## 매칭 키 (v2 — apply_to_xlsx 기준)
+청소년청년성가집 번호로 직접 매칭 가능한 소스가 가장 다루기 쉽다.
 
-1. 1순위: 예) 가톨릭성가번호 (외부ID.가톨릭성가번호)
-2. 2순위: 제목 완전 일치
-3. fallback: 제목 유사도 (위험 — 오매칭 주의)
+1. 1순위: 청소년청년성가집 번호 직접 매칭 (jsonl `번호` ↔ 곡정보.xlsx 가사 시트)
+2. 2순위: 제목 완전 일치/정규화 일치 (곡정보.xlsx 곡목록 시트의 `제목`)
+3. fallback: 제목 유사도 (위험 — 오매칭 주의, 자동 채택 금지)
+
+별도 외부 식별자(가톨릭성가번호 등)는 v2에선 청소년청년성가집 번호와 매핑이 없으므로
+번호 또는 제목 매칭으로 환원 필요.
 
 ## 요청 방식
 - 엔드포인트 패턴: `https://...`
@@ -43,21 +46,21 @@ status: draft  # draft | active | blocked | deprecated
 링크만 있고 본문이 없는 페이지를 걸러내기 위한 휴리스틱.
 - 예: 한글 문자 수 < 60, 가사 행 < 4개
 
-## 스크립트
+## 스크립트 (v2)
 - 경로: `scripts/crawler/crawl_XXX.py`
 - 사용법:
-  - `python scripts/crawler/crawl_XXX.py <번호 또는 범위 ...>` — 크롤링 + 자동 병합
-  - `python scripts/crawler/crawl_XXX.py --merge-only`
-  - 옵션: `--no-merge`, `--force`
+  - `python scripts/crawler/crawl_XXX.py <번호 또는 범위 ...>` — 크롤링, **jsonl 생성만** (자동 병합 없음)
 - 출력: `scripts/crawler/data/XXX.jsonl` (append, resume 지원)
-- 레코드 필드: 번호, 제목, url, 가사, 매칭방식, 수집시각
+- 레코드 필드 (표준): `번호`(청소년청년성가집), `제목`, `url`, `가사`, `매칭방식`, `수집시각`
+  실패 레코드: `번호`, `제목`, `실패원인`, (선택) `후보`
+- v1 흐름의 자동 병합(`_merge.py`)은 v2 미대응 → 신규 크롤러는 **자동 병합을 구현하지 말 것**
 
-## songs.json 병합
-- 크롤러 내부에서 `_merge.py` 헬퍼로 in-place 병합 (공통 구조)
-- 매칭 키: (예) 번호 또는 제목 완전 일치
-- 갱신 필드: `가사.본문`, `가사.출처=<source_id>`, `가사.참조URL`, `가사.수집시각`,
-  소스별 `외부ID.<field>`
-- 보호 정책: [SKILL.md § 병합 정책](../SKILL.md#병합-정책-공통) 공통 규칙 적용
+## v2 적용 (jsonl → 곡정보.xlsx)
+- 적용 스크립트: `scripts/crawler/apply_to_xlsx.py <source_id>` 또는 `apply_to_xlsx.py <jsonl경로> --source <yseng|maria>`
+- 매칭: jsonl `번호` 직접 (yseng 패턴) / jsonl `제목` 정규화 일치 (maria 패턴)
+- 갱신 위치: 곡정보.xlsx의 `가사` 시트, 매칭 행의 본문 셀
+- 보호: 가사 셀이 비어있는 곡만 채움 (이미 있으면 skip, `--force`로 덮어쓰기)
+- 적용 후 `python scripts/rebuild.py`로 songs.json·songs_index.json 재빌드
 
 ## 주의사항 / 알려진 이슈
 - 동명이곡(같은 제목 여러 곡) 처리
