@@ -371,6 +371,87 @@ td.check-col.saving input {
   border-bottom: 1px solid #f1f2f6;
 }
 
+/* 사용 경험 편집 블록 (ADR-008) */
+.impression-edit {
+  background: #fafbfc;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 0.85rem;
+}
+.impression-edit .ie-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+  flex-wrap: wrap;
+}
+.impression-edit .ie-label {
+  display: inline-block;
+  min-width: 60px;
+  color: #555;
+  font-weight: 600;
+}
+.impression-edit select {
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 0.85rem;
+}
+.impression-edit .ie-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: normal;
+  color: #444;
+  cursor: pointer;
+}
+.impression-edit textarea#ieMemo {
+  flex: 1 1 auto;
+  min-height: 60px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  resize: vertical;
+}
+.impression-edit .ie-actions { justify-content: flex-end; gap: 12px; margin-top: 10px; }
+.impression-edit .ie-status { font-size: 0.8rem; color: #27ae60; }
+.impression-edit .ie-meta { font-size: 0.78rem; color: #888; }
+.impression-edit .ie-recent-title {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  color: #666;
+  font-weight: 600;
+  border-top: 1px dashed #eee;
+  padding-top: 8px;
+}
+.impression-edit .ie-recent {
+  font-size: 0.78rem;
+  color: #555;
+  max-height: 120px;
+  overflow-y: auto;
+}
+.impression-edit .ie-recent .ie-log-entry {
+  padding: 4px 0;
+  border-bottom: 1px dotted #eee;
+}
+.impression-edit .ie-recent .ie-log-entry:last-child { border-bottom: none; }
+.impression-edit .ie-recent .ie-log-time { color: #999; margin-right: 8px; }
+.impression-edit .ie-recent .ie-log-src {
+  display: inline-block;
+  font-size: 0.7rem;
+  background: #eef;
+  color: #557;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+}
+.impression-edit .no-data { color: #aaa; font-style: italic; }
+
 .lyrics-box {
   background: #fafbfc;
   border: 1px solid #eee;
@@ -849,6 +930,66 @@ td.check-col.saving input {
       </div>
       <div class="detail-meta" id="detailMeta"></div>
 
+      <div class="detail-section-title">곡 메타 <span class="hint" style="font-weight:normal;color:#888;font-size:0.8rem;">— 비고·조표·박자 (v2.1)</span></div>
+      <div class="impression-edit" id="songMetaEdit">
+        <div class="ie-row">
+          <label class="ie-label">조표</label>
+          <input type="text" id="smKeysig" placeholder="-7..+7" style="width:70px; padding:4px 8px; font-size:0.85rem;" maxlength="3">
+          <label class="ie-label" style="margin-left:18px;">박자</label>
+          <input type="text" id="smMeter" placeholder="4/4" style="width:80px; padding:4px 8px; font-size:0.85rem;" maxlength="8">
+          <span class="ie-meta" style="margin-left:14px;">샤프 +N / 플랫 -N / 0=다장조 / 빈칸=미확인</span>
+        </div>
+        <div class="ie-row">
+          <label class="ie-label" style="vertical-align:top;">비고</label>
+          <textarea id="smRemark" placeholder="3절은 반주만 등 자유 메모" spellcheck="false" rows="2" style="flex:1; padding:6px 8px; font-family:inherit; font-size:0.85rem; resize:vertical;"></textarea>
+        </div>
+        <div class="ie-row ie-actions">
+          <span class="ie-status" id="smStatus"></span>
+          <button class="btn btn-primary" id="smSaveBtn" type="button">곡 메타 저장</button>
+        </div>
+      </div>
+
+      <div class="detail-section-title">사용 경험 <span class="hint" style="font-weight:normal;color:#888;font-size:0.8rem;">— 학생들과 부딪쳐 본 인상</span></div>
+      <div class="impression-edit" id="impressionEdit">
+        <div class="ie-row">
+          <label class="ie-label">난이도</label>
+          <select id="ieDifficulty">
+            <option value="">미정</option>
+            <option value="상">상</option>
+            <option value="중">중</option>
+            <option value="하">하</option>
+          </select>
+          <label class="ie-label">음역</label>
+          <select id="ieRange">
+            <option value="">미정</option>
+            <option value="높음">높음</option>
+            <option value="중간">중간</option>
+            <option value="낮음">낮음</option>
+          </select>
+        </div>
+        <div class="ie-row">
+          <span class="ie-label">떼창적합</span>
+          <label class="ie-radio"><input type="radio" name="ieSing" value="true"> 적합</label>
+          <label class="ie-radio"><input type="radio" name="ieSing" value="false"> 부적합</label>
+          <label class="ie-radio"><input type="radio" name="ieSing" value=""> 미정</label>
+          <span class="ie-label" style="margin-left:18px;">반주필수</span>
+          <label class="ie-radio"><input type="radio" name="ieAccomp" value="true"> 필수</label>
+          <label class="ie-radio"><input type="radio" name="ieAccomp" value="false"> 무반주가능</label>
+          <label class="ie-radio"><input type="radio" name="ieAccomp" value=""> 미정</label>
+        </div>
+        <div class="ie-row">
+          <label class="ie-label" style="vertical-align:top;">메모</label>
+          <textarea id="ieMemo" placeholder="후렴 쉬움, 도입부 어려움 등" spellcheck="false"></textarea>
+        </div>
+        <div class="ie-row ie-actions">
+          <span class="ie-status" id="ieStatus"></span>
+          <span class="ie-meta" id="ieMeta"></span>
+          <button class="btn btn-primary" id="ieSaveBtn" type="button">사용경험 저장</button>
+        </div>
+        <div class="ie-recent-title">최근 소감 로그</div>
+        <div class="ie-recent" id="ieRecent"><span class="no-data">로그 없음</span></div>
+      </div>
+
       <div class="lyrics-section-header">
         <span class="title">가사 <span id="detailLyricsMark"></span> <span class="dirty-dot" id="dirtyDot" style="display:none;" title="저장되지 않은 변경사항">●</span></span>
         <span class="hint">Ctrl+S 저장 · Esc 되돌리기 · 곡 이동 시 자동 저장</span>
@@ -1236,26 +1377,31 @@ td.check-col.saving input {
     renderPreview(body);
     setSaveStatus('', '');
 
-    // Meta
+    // Meta (v2.1 — 색인 9필드. 비고·조표·박자는 아래 '곡 메타 편집' 블록에서 표시·편집)
     const metaEl = document.getElementById('detailMeta');
     const liturgy = song.색인 || {};
-    const extId = song.외부ID || {};
     const metaItems = [
       ['작곡자', song.작곡자 || '-'],
       ['분류', song.분류 || '-'],
+      ['요약', liturgy.요약 || '-'],
       ['전례별', liturgy.전례별 || '-'],
       ['전례시기', liturgy.전례시기 || '-'],
       ['성월별', liturgy.성월별 || '-'],
       ['대축일별', liturgy.대축일별 || '-'],
       ['관련성경구절', liturgy.관련성경구절 || '-'],
-      ['비고', liturgy.비고 || '-'],
-      ['가톨릭성가번호', extId.가톨릭성가번호 != null ? extId.가톨릭성가번호 : '-'],
-      ['가사출처', (song.가사 && song.가사.출처) || '-'],
-      ['절구조', (song.가사 && song.가사.절구조) || '-'],
+      ['느낌', liturgy.느낌 || '-'],
+      ['키워드', liturgy.키워드 || '-'],
+      ['곡모음집', liturgy.곡모음집 || '-'],
     ];
     metaEl.innerHTML = metaItems.map(([label, value]) =>
       '<div class="meta-item"><span class="meta-label">' + label + '</span><span class="meta-value">' + esc(String(value)) + '</span></div>'
     ).join('');
+
+    // 곡 메타 편집 블록 채우기 (v2.1, ADR-007)
+    populateSongMeta(song);
+
+    // 사용 경험 편집 블록 채우기 (ADR-008)
+    populateImpression(song);
 
     // Reliability
     const relGrid = document.getElementById('detailReliability');
@@ -1374,6 +1520,10 @@ td.check-col.saving input {
       updateDirtyIndicator();
     });
 
+    // 사용 경험 저장 버튼 (ADR-008)
+    document.getElementById('ieSaveBtn').addEventListener('click', saveImpression);
+    document.getElementById('smSaveBtn').addEventListener('click', saveSongMeta);
+
     // Ref URL add/delete
     document.getElementById('refLinkAddBtn').addEventListener('click', addRefUrl);
     document.getElementById('refLinkInput').addEventListener('keydown', function(e) {
@@ -1416,6 +1566,186 @@ td.check-col.saving input {
         navTo(-1);
       }
     });
+  }
+
+  // ── 곡 메타 (v2.1, ADR-007) — 비고·조표·박자 편집 ──
+  function fmtKeysig(v) {
+    if (v === null || v === undefined || v === '') return '';
+    const n = Number(v);
+    if (Number.isNaN(n)) return String(v);
+    return n === 0 ? '0' : (n > 0 ? '+' + n : String(n));
+  }
+
+  function populateSongMeta(song) {
+    document.getElementById('smKeysig').value = fmtKeysig(song.조표);
+    document.getElementById('smMeter').value = song.박자 || '';
+    document.getElementById('smRemark').value = song.비고 || '';
+    document.getElementById('smKeysig').readOnly = readOnly;
+    document.getElementById('smMeter').readOnly = readOnly;
+    document.getElementById('smRemark').readOnly = readOnly;
+    document.getElementById('smSaveBtn').disabled = readOnly;
+    document.getElementById('smStatus').textContent = '';
+  }
+
+  function saveSongMeta() {
+    if (readOnly || selectedSongId === null) return;
+    const song = allSongs.find(s => s.번호 == selectedSongId);
+    if (!song) return;
+
+    const patch = {
+      비고: document.getElementById('smRemark').value,
+      조표: document.getElementById('smKeysig').value,
+      박자: document.getElementById('smMeter').value,
+    };
+
+    const status = document.getElementById('smStatus');
+    const btn = document.getElementById('smSaveBtn');
+    status.textContent = '저장 중...';
+    status.style.color = '#888';
+    btn.disabled = true;
+
+    fetch('/api/songs/' + encodeURIComponent(String(song.번호)), {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(patch),
+    })
+      .then(r => r.json().then(j => ({ httpOk: r.ok, body: j })))
+      .then(({ httpOk, body }) => {
+        if (!httpOk || !body.ok) {
+          status.textContent = '실패: ' + (body.error || body.detail || '알 수 없음');
+          status.style.color = '#c0392b';
+          btn.disabled = false;
+          return;
+        }
+        // 곡 객체 메모리에도 반영
+        song.비고 = patch.비고;
+        const ks = patch.조표.trim();
+        song.조표 = ks === '' ? null : Number(ks.replace('+', ''));
+        song.박자 = patch.박자.trim();
+        const changed = (body.changed || []).filter(c => c !== '가사.본문');
+        status.textContent = changed.length ? ('저장됨 ✓ (' + changed.join(', ') + ')') : '변경 없음';
+        status.style.color = changed.length ? '#27ae60' : '#888';
+        btn.disabled = false;
+      })
+      .catch(err => {
+        status.textContent = '실패: ' + err.message;
+        status.style.color = '#c0392b';
+        btn.disabled = false;
+      });
+  }
+
+  // ── 사용 경험 (ADR-008) ──
+  function populateImpression(song) {
+    const exp = song.사용경험 || {};
+    document.getElementById('ieDifficulty').value = exp.난이도 || '';
+    document.getElementById('ieRange').value = exp.음역 || '';
+    setRadio('ieSing', exp.떼창적합);
+    setRadio('ieAccomp', exp.반주필수);
+    document.getElementById('ieMemo').value = exp.메모 || '';
+    document.getElementById('ieMemo').readOnly = readOnly;
+    document.getElementById('ieDifficulty').disabled = readOnly;
+    document.getElementById('ieRange').disabled = readOnly;
+    document.querySelectorAll('input[name="ieSing"], input[name="ieAccomp"]').forEach(el => {
+      el.disabled = readOnly;
+    });
+    document.getElementById('ieSaveBtn').disabled = readOnly;
+    document.getElementById('ieStatus').textContent = '';
+    const meta = document.getElementById('ieMeta');
+    if (exp.최종갱신) {
+      meta.textContent = '최종갱신: ' + exp.최종갱신;
+    } else {
+      meta.textContent = '아직 기록 없음';
+    }
+    fetchRecentImpressions(song.번호);
+  }
+
+  function setRadio(name, value) {
+    const v = value === true ? 'true' : value === false ? 'false' : '';
+    document.querySelectorAll('input[name="' + name + '"]').forEach(el => {
+      el.checked = (el.value === v);
+    });
+  }
+
+  function getRadio(name) {
+    const el = document.querySelector('input[name="' + name + '"]:checked');
+    if (!el || el.value === '') return null;
+    return el.value === 'true';
+  }
+
+  function fetchRecentImpressions(num) {
+    const container = document.getElementById('ieRecent');
+    container.innerHTML = '<span class="no-data">로딩...</span>';
+    fetch('/api/impressions/' + encodeURIComponent(String(num)))
+      .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+      .then(data => {
+        const recent = data.최근로그 || [];
+        if (recent.length === 0) {
+          container.innerHTML = '<span class="no-data">로그 없음</span>';
+          return;
+        }
+        container.innerHTML = recent.map(e => {
+          const t = (e.시각 || '').replace('T', ' ').slice(0, 16);
+          const src = e.출처 === 'viewer-edit' ? 'viewer' : '회고';
+          return '<div class="ie-log-entry">' +
+            '<span class="ie-log-time">' + esc(t) + '</span>' +
+            esc(e.코멘트 || '') +
+            '<span class="ie-log-src">' + esc(src) + '</span>' +
+            '</div>';
+        }).join('');
+      })
+      .catch(() => {
+        container.innerHTML = '<span class="no-data">로그 조회 실패</span>';
+      });
+  }
+
+  function saveImpression() {
+    if (readOnly || selectedSongId === null) return;
+    const song = allSongs.find(s => s.번호 == selectedSongId);
+    if (!song) return;
+
+    const patch = {
+      난이도: document.getElementById('ieDifficulty').value || null,
+      음역: document.getElementById('ieRange').value || null,
+      떼창적합: getRadio('ieSing'),
+      반주필수: getRadio('ieAccomp'),
+      메모: document.getElementById('ieMemo').value,
+    };
+
+    const status = document.getElementById('ieStatus');
+    const btn = document.getElementById('ieSaveBtn');
+    status.textContent = '저장 중...';
+    status.style.color = '#888';
+    btn.disabled = true;
+
+    fetch('/api/impressions/' + encodeURIComponent(String(song.번호)), {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(patch),
+    })
+      .then(r => r.json().then(j => ({ httpOk: r.ok, body: j })))
+      .then(({ httpOk, body }) => {
+        if (!httpOk || !body.ok) {
+          status.textContent = '실패: ' + (body.error || body.detail || '알 수 없음');
+          status.style.color = '#c0392b';
+          btn.disabled = false;
+          return;
+        }
+        // 곡 객체 메모리에도 반영
+        song.사용경험 = body.사용경험;
+        status.textContent = '저장됨 ✓';
+        status.style.color = '#27ae60';
+        btn.disabled = false;
+        const meta = document.getElementById('ieMeta');
+        if (body.사용경험 && body.사용경험.최종갱신) {
+          meta.textContent = '최종갱신: ' + body.사용경험.최종갱신;
+        }
+        fetchRecentImpressions(song.번호);
+      })
+      .catch(err => {
+        status.textContent = '실패: ' + err.message;
+        status.style.color = '#c0392b';
+        btn.disabled = false;
+      });
   }
 
   // ── Verification Checkbox ──

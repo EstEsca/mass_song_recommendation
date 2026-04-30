@@ -59,6 +59,9 @@ def _empty_song(num: int) -> dict:
         "제목": "",
         "작곡자": "",
         "분류": "",
+        "비고": "",
+        "조표": None,
+        "박자": "",
         "색인": {
             "요약": "",
             "성경": [],
@@ -72,6 +75,19 @@ def _empty_song(num: int) -> dict:
         },
         "가사": "",
     }
+
+
+def _parse_keysig(v) -> int | None:
+    """xlsx 조표 셀 → int|None. '+3', '0', '-2', 빈셀 모두 처리."""
+    if v is None or v == "":
+        return None
+    s = str(v).strip()
+    if s == "":
+        return None
+    try:
+        return int(float(s))  # '+3.0' 같은 셀도 처리
+    except (ValueError, TypeError):
+        return None
 
 
 def build(xlsx_path: Path) -> tuple[dict, list[str]]:
@@ -93,6 +109,9 @@ def build(xlsx_path: Path) -> tuple[dict, list[str]]:
         s["제목"] = str(row[1] or "")
         s["작곡자"] = str(row[2] or "")
         s["분류"] = str(row[3] or "")
+        s["비고"] = str(row[4] or "") if len(row) > 4 else ""
+        s["조표"] = _parse_keysig(row[5]) if len(row) > 5 else None
+        s["박자"] = str(row[6] or "") if len(row) > 6 else ""
         songs[num_str] = s
 
     # 2) 요약
@@ -157,7 +176,7 @@ def main() -> None:
     sha = sha256_of(XLSX)
     data = {
         "metadata": {
-            "schema_version": "2.0",
+            "schema_version": "2.1",
             "created": existing_created,
             "updated": TODAY,
             "total_songs": len(songs),

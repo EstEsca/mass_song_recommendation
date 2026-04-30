@@ -53,7 +53,7 @@ def main() -> None:
 
     out = {
         "metadata": {
-            "schema_version": "2.0",
+            "schema_version": "2.1",
             "built_from_sha256": sha,
             "built_at": now,
             "total_songs": len(index_songs),

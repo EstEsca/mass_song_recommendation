@@ -20,6 +20,10 @@ data/source/선곡표.xlsx
 data/song_impressions.json
 data/impression_log.jsonl
 
+# OMR 산출물 (저작권 그래픽 파생, S-007)
+data/raw/audiveris_out/
+data/raw/omr_sample/
+
 # 로컬 설정 (개인별 퍼미션 포함 가능)
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
