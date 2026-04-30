@@ -31,15 +31,15 @@ copy server\.env.example server\.env
 # Windows
 powershell -File server\run.ps1
 # or
-python -m uvicorn server.app:app --host 0.0.0.0 --port 8000
+python -m uvicorn server.app:app --host 0.0.0.0 --port 10007
 ```
 
-로컬 테스트: http://localhost:8000
+로컬 테스트: http://localhost:10007
 
 ## 외부 공유 (ngrok)
 
 ```powershell
-ngrok http 8000
+ngrok http 10007
 ```
 
 ngrok이 출력한 `https://xxx.ngrok-free.app` URL만 지인에게 공유한다.

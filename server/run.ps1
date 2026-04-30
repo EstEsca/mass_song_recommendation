@@ -22,4 +22,4 @@ if (-not $env:ANTHROPIC_API_KEY) {
     Write-Warning "ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다. server/.env 를 만드세요."
 }
 
-python -m uvicorn server.app:app --host 0.0.0.0 --port 8000
+python -m uvicorn server.app:app --host 0.0.0.0 --port 10007

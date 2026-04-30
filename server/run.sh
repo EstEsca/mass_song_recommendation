@@ -16,4 +16,4 @@ if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
   echo "경고: ANTHROPIC_API_KEY 미설정. server/.env 를 만드세요." >&2
 fi
 
-exec python -m uvicorn server.app:app --host 0.0.0.0 --port 8000
+exec python -m uvicorn server.app:app --host 0.0.0.0 --port 10007
