@@ -1,6 +1,6 @@
-# 저작권 보호 자료 (원본 및 파생물)
+# 저작권 보호 자료 (원본 및 파생물) — 루트의 source/ 만. data/source/ 는 커밋 대상
 *.pdf
-source/
+/source/
 pages/
 inbox/sample_page.html
 
@@ -10,15 +10,10 @@ inbox/가사.json
 inbox/가사_sample.json
 inbox/가사_1to20_결과.md
 
-# v2 데이터 (가사 본문 포함, 저작권 보호)
-data/source/곡정보.xlsx
+# v2 데이터 — 2026-11-04부터 git으로 머신 간 동기화 (docs/manuals/multi_machine.md 참조)
+# 곡정보.xlsx · songs_index.json · 선곡표.xlsx · song_impressions.json · impression_log.jsonl 은 커밋 대상.
+# (로컬 머신 포맷으로 유실된 경험에 따른 결정. songs.json이 이미 가사를 포함해 커밋돼 있었음.)
 data/songs.v1.bak.json
-data/songs_index.json
-
-# 사용 경험 데이터 (개인 사용 기록, ADR-008)
-data/source/선곡표.xlsx
-data/song_impressions.json
-data/impression_log.jsonl
 
 # OMR 산출물 (저작권 그래픽 파생, S-007)
 data/raw/audiveris_out/

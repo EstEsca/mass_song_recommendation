@@ -3,11 +3,12 @@ export_to_xlsx.py
 
 v2 songs.json → data/source/곡정보.xlsx (4시트).
 
-Stage A 초기 1회용. 이후에는 xlsx가 SSoT가 되므로 재실행 금지
+Stage A 초기 1회용 + 재해 복구용(xlsx 유실 시 songs.json에서 재생성).
+이후에는 xlsx가 SSoT가 되므로 평상시 재실행 금지
 (재실행은 사용자 편집을 덮어쓸 위험 → 기본적으로 파일이 이미 있으면 실행 거부).
 
-시트 구성:
-- 곡목록 (Wide): 번호·제목·작곡자·분류
+시트 구성 (schema v2.1):
+- 곡목록 (Wide): 번호·제목·작곡자·분류·비고·조표·박자
 - 요약   (Wide): 번호·요약
 - 색인   (Tall/EAV): 번호·타입·값
 - 가사   (Wide): 번호·가사
@@ -78,16 +79,27 @@ def _set_col_widths(ws, widths: list[int]) -> None:
 
 # --- sheet writers -----------------------------------------------------------
 
+def _keysig_cell(v) -> str:
+    """int|None → 조표 셀 문자열 ('+3', '0', '-2', '')."""
+    if v is None or v == "":
+        return ""
+    v = int(v)
+    return f"{v:+d}" if v else "0"
+
+
 def write_songs_sheet(wb: Workbook, songs: dict) -> None:
     ws = wb.create_sheet("곡목록")
-    ws.append(["번호", "제목", "작곡자", "분류"])
+    ws.append(["번호", "제목", "작곡자", "분류", "비고", "조표", "박자"])
     for num_key in sorted(songs.keys(), key=int):
         s = songs[num_key]
-        ws.append([str(s["번호"]), s["제목"], s["작곡자"], s["분류"]])
-    _style_header(ws, 4)
+        ws.append([
+            str(s["번호"]), s["제목"], s["작곡자"], s["분류"],
+            s.get("비고") or "", _keysig_cell(s.get("조표")), s.get("박자") or "",
+        ])
+    _style_header(ws, 7)
     _set_all_text(ws)
-    _add_table(ws, "tbl_songs", 4, len(songs))
-    _set_col_widths(ws, [8, 40, 20, 10])
+    _add_table(ws, "tbl_songs", 7, len(songs))
+    _set_col_widths(ws, [8, 40, 20, 10, 30, 8, 8])
 
 
 def write_summary_sheet(wb: Workbook, songs: dict) -> None:
