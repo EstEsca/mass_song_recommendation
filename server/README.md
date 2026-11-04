@@ -49,7 +49,7 @@ ngrok이 출력한 `https://xxx.ngrok-free.app` URL만 지인에게 공유한다
 - **사용자 작업 범위**: 프로젝트 스킬 호출 위주 (system prompt로 안내)
 - **허용 도구**: `Read, Write, Edit, Glob, Grep, WebFetch, Bash`
 - **차단**:
-  - `Write`/`Edit` 대상 경로가 `s:/song_recommendation/` 밖이면 에러
+  - `Write`/`Edit` 대상 경로가 프로젝트 루트(저장소 clone 위치) 밖이면 에러
   - 프롬프트 2000자 초과 거부
   - 세션당 최대 30턴
 - **동시성**: 전역 `asyncio.Lock` — 두 번째 요청은 즉시 `busy` 이벤트

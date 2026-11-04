@@ -39,7 +39,7 @@ data/source/곡정보.xlsx             data/songs.json               data/songs_
 ## 파일 구성
 
 ```
-s:/song_recommendation/
+<프로젝트 루트>/
 ├── data/
 │   ├── source/
 │   │   └── 곡정보.xlsx              # 사람 편집 SSoT (시트 4개)

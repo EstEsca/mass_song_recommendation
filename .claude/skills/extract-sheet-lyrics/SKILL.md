@@ -36,9 +36,9 @@ PyMuPDF(`fitz`)로 각 글자의 `(x, y)` 좌표를 얻은 뒤:
 
 ## 데이터 파일
 
-- **PDF**: `s:/song_recommendation/source/청소년청년성가집.pdf` (또는 사용자 지정)
-- **곡목록**: `s:/song_recommendation/data/raw/곡목록.csv` — 곡 번호 ↔ 제목 매핑
-- **출력**: `s:/song_recommendation/scripts/crawler/data/pdf_extracted.jsonl`
+- **PDF**: `source/청소년청년성가집.pdf` (또는 사용자 지정)
+- **곡목록**: `data/raw/곡목록.csv` — 곡 번호 ↔ 제목 매핑
+- **출력**: `scripts/crawler/data/pdf_extracted.jsonl`
 
 ## 구현 스크립트
 

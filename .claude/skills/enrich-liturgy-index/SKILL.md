@@ -122,6 +122,6 @@ Grep pattern="성모|마리아|어머니" path="data/songs.json"
 ## 주의사항
 
 - **Edit 전 반드시 Read로 해당 곡 블록을 확인**한다 (스키마 v1.0 준수)
-- 색인 값은 [schema.md](s:/song_recommendation/docs/spec/schema.md)에 명시된 문자열 패턴을 따른다 — 새로운 값 형식은 사용자에게 확인 후 사용
+- 색인 값은 [schema.md](../../../docs/spec/schema.md)에 명시된 문자열 패턴을 따른다 — 새로운 값 형식은 사용자에게 확인 후 사용
 - 다른 필드(가사, 신뢰도 등)는 절대 건드리지 않음
 - 한 실행당 한 주제만 처리 — 여러 주제를 섞지 말 것

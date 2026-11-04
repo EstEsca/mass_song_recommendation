@@ -122,7 +122,7 @@
 ## 프로젝트 핵심 파일 맵 (v2)
 
 ```
-s:/song_recommendation/
+<프로젝트 루트>/                           # clone 위치는 머신마다 다름 (multi_machine.md 참조)
 ├── README.md                              # 프로젝트 개요
 ├── ISSUES.md                              # 할일 목록
 ├── data/

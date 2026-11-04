@@ -1,6 +1,6 @@
 # 어시스턴트 + 편집기 서버 실행 매뉴얼
 
-**갱신일:** 2026-04-25
+**갱신일:** 2026-11-04 (포트 10007 반영)
 **적용 버전:** schema v2.0 / server/app.py v2 어댑터 적용본
 
 브라우저로 어시스턴트(`/assistant/`)와 편집기(`/editor/`)를 띄우는 절차.
@@ -57,16 +57,16 @@ python scripts/rebuild.py
 powershell -File server\run.ps1
 
 # 또는 직접
-python -m uvicorn server.app:app --host 0.0.0.0 --port 8000 --reload
+python -m uvicorn server.app:app --host 0.0.0.0 --port 10007 --reload
 ```
 
 ## 접속
 
 | 경로 | 용도 |
 |---|---|
-| http://localhost:8000/ | 랜딩 페이지 (어시스턴트/편집기 선택) |
-| http://localhost:8000/assistant/ | Claude 채팅 (스킬 호출) |
-| http://localhost:8000/editor/ | 가사 편집기 (viewer/index.html 마운트) |
+| http://localhost:10007/ | 랜딩 페이지 (어시스턴트/편집기 선택) |
+| http://localhost:10007/assistant/ | Claude 채팅 (스킬 호출) |
+| http://localhost:10007/editor/ | 가사 편집기 (viewer/index.html 마운트) |
 
 ## 편집기 사용 (가사 본문 수정)
 
@@ -84,7 +84,7 @@ python -m uvicorn server.app:app --host 0.0.0.0 --port 8000 --reload
 ## 외부 공유 (ngrok, 옵션)
 
 ```powershell
-ngrok http 8000
+ngrok http 10007
 ```
 
 `https://xxx.ngrok-free.app` URL만 지인에게 공유. 보안 주의는 [server/README.md](../../server/README.md) "보안/비용" 섹션 참조.
@@ -99,11 +99,11 @@ ngrok http 8000
 
 ```bash
 # Health check
-curl http://localhost:8000/api/status
+curl http://localhost:10007/api/status
 # → {"busy": false, ...}
 
 # 곡 데이터 (v1 호환 형태로 어댑트되어 반환)
-curl http://localhost:8000/api/songs | python -m json.tool | head -50
+curl http://localhost:10007/api/songs | python -m json.tool | head -50
 ```
 
 ## 트러블슈팅
@@ -129,13 +129,13 @@ python scripts/rebuild.py
 
 복구가 안 되면 `data/songs.v1.bak.json`(마이그레이션 시점 백업)으로 롤백 후 재마이그레이션 가능.
 
-### `Address already in use` (포트 8000 충돌)
+### `Address already in use` (포트 10007 충돌)
 
-다른 프로세스가 8000을 사용 중.
+다른 프로세스가 10007을 사용 중.
 
 ```powershell
 # 사용 프로세스 확인
-netstat -ano | findstr :8000
+netstat -ano | findstr :10007
 
 # 다른 포트로 실행
 python -m uvicorn server.app:app --port 8765

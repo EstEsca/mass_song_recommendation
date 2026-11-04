@@ -2,10 +2,13 @@
 import json
 import sys
 from collections import Counter
+from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-with open("s:/song_recommendation/data/songs.json", encoding="utf-8") as f:
+ROOT = Path(__file__).resolve().parent.parent
+
+with open(ROOT / "data" / "songs.json", encoding="utf-8") as f:
     d = json.load(f)
 
 c_src = Counter()

@@ -10,6 +10,12 @@ PDF 텍스트 레이어에서 성가 가사를 위치 기반으로 추출 (v2).
 """
 
 import fitz
+
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+PDF_PATH = ROOT / 'source' / '청소년청년성가집.pdf'
+DATA_DIR = ROOT / 'scripts' / 'crawler' / 'data'
 import re
 import json
 from pathlib import Path
@@ -175,7 +181,7 @@ def extract_song(doc, song_num: int, title: str) -> dict:
 
 
 def main(samples, output_path):
-    doc = fitz.open('s:/song_recommendation/source/청소년청년성가집.pdf')
+    doc = fitz.open(str(PDF_PATH))
     results = []
     for num, title in samples:
         print(f"[{num:>3}] {title} 처리 중...")
@@ -202,4 +208,4 @@ if __name__ == '__main__':
         (16, '구원자 예수 너의 사랑'),
         (19, '그 길'),
     ]
-    main(samples, 's:/song_recommendation/scripts/crawler/data/pdf_sample_10_v2.json')
+    main(samples, str(DATA_DIR / 'pdf_sample_10_v2.json'))

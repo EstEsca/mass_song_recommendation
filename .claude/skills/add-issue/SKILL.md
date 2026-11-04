@@ -13,7 +13,7 @@ ISSUES.md 파일에 새 이슈를 추가합니다.
 
 ### Step 1: 현재 이슈 파일 읽기
 
-`s:/song_recommendation/ISSUES.md`를 읽어서:
+`ISSUES.md`를 읽어서:
 - 마지막 이슈 번호를 확인 (다음 번호 = 마지막 + 1)
 - 현재 테이블 구조를 파악
 

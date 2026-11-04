@@ -10,12 +10,12 @@ argument-hint: "[기간 또는 특별 요청]"
 
 ## 데이터 파일 (v2)
 
-- **운영 데이터(파생)**: `s:/song_recommendation/data/songs.json` — v2 스키마. 가사·색인 8카테고리 통합
-- **경량 색인(파생)**: `s:/song_recommendation/data/songs_index.json` — 가사 제외, 1차 후보 필터용
-- **편집 SSoT**: `s:/song_recommendation/data/source/곡정보.xlsx` — 사람 편집은 여기서만
-- **선곡표** (ADR-008): `s:/song_recommendation/data/source/선곡표.xlsx` — 매달 다듬어 쌓이는 미사 선곡 묶음. GET `/api/setlist`로 조회. 중복 회피 기준.
-- **곡별 사용경험** (ADR-008): `s:/song_recommendation/data/song_impressions.json` — 학생들과 부딪쳐 본 누적 인상(난이도·음역·떼창적합·반주필수·메모). 추천 가중치에 직접 반영.
-- **소감 raw** (ADR-008, 옵션): `s:/song_recommendation/data/impression_log.jsonl` — 미사 전체 소감(`대상="미사"`)을 최근 1~2개월만 컨텍스트로 1회 요약 주입.
+- **운영 데이터(파생)**: `data/songs.json` — v2 스키마. 가사·색인 8카테고리 통합
+- **경량 색인(파생)**: `data/songs_index.json` — 가사 제외, 1차 후보 필터용
+- **편집 SSoT**: `data/source/곡정보.xlsx` — 사람 편집은 여기서만
+- **선곡표** (ADR-008): `data/source/선곡표.xlsx` — 매달 다듬어 쌓이는 미사 선곡 묶음. GET `/api/setlist`로 조회. 중복 회피 기준.
+- **곡별 사용경험** (ADR-008): `data/song_impressions.json` — 학생들과 부딪쳐 본 누적 인상(난이도·음역·떼창적합·반주필수·메모). 추천 가중치에 직접 반영.
+- **소감 raw** (ADR-008, 옵션): `data/impression_log.jsonl` — 미사 전체 소감(`대상="미사"`)을 최근 1~2개월만 컨텍스트로 1회 요약 주입.
 - **전례력 규칙**: `.claude/skills/recommend-hymns/liturgical_calendar.md`
 - **vocab**: [docs/spec/vocab.md](../../../docs/spec/vocab.md) (시기 5종 / 성월 12종 / 역할 / 느낌 8종)
 

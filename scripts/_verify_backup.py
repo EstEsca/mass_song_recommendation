@@ -6,7 +6,8 @@ from openpyxl import load_workbook
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-XLSX = Path("s:/song_recommendation/data/archive/신뢰도_스냅샷_2026-04-25.xlsx")
+ROOT = Path(__file__).resolve().parent.parent
+XLSX = ROOT / "data" / "archive" / "신뢰도_스냅샷_2026-04-25.xlsx"
 
 wb = load_workbook(XLSX)
 print(f"시트 목록: {wb.sheetnames}")

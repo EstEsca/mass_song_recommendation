@@ -51,9 +51,9 @@ OCR로 추출된 가사 텍스트의 어색하거나 불확실한 부분을, 웹
 
 ## 데이터 파일
 
-- **가사 파일**: `s:/song_recommendation/inbox/가사.json` (find-lyrics 출력물)
-- **크롤링 데이터**: `s:/song_recommendation/scripts/crawler/data/maria_sungga.jsonl`
-- **곡목록**: `s:/song_recommendation/data/raw/곡목록.csv`
+- **가사 파일**: `inbox/가사.json` (find-lyrics 출력물)
+- **크롤링 데이터**: `scripts/crawler/data/maria_sungga.jsonl`
+- **곡목록**: `data/raw/곡목록.csv`
 
 ## 실행 흐름
 
