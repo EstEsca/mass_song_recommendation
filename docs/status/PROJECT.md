@@ -129,12 +129,12 @@ yseng.kr                  (청소년청년성가집 일부 보완, 크롤링 완
 
 - **저작권 보호 자료**: PDF 원본, 페이지 이미지, 가사 본문
 - **처리 원칙**: 사용자가 합법 보유한 자료 내에서만 처리. 가사 본문은 대화창 출력 제한.
-- **현재 (비공개 개발 단계, 2026-11-04 확인)**: 저장소가 private이므로 `data/songs.json`(가사 본문 포함)은 git에 추적한다. clone만으로 모드 A 추천이 동작하게 하기 위한 의도적 선택. 편집 원본 `data/source/곡정보.xlsx`, 원본 PDF, 크롤링 결과, 운영 사이드카는 `.gitignore`로 계속 차단.
-- **저장소를 public으로 전환할 경우 (필수 선행 조치)**: 가사 본문이 든 파일을 공개하면 안 된다. 전환 전에 반드시 다음을 수행.
-  1. `data/songs.json`을 `.gitignore`에 추가하고 추적 해제 (`git rm --cached`)
-  2. git 히스토리에 이미 들어간 가사 본문 제거 (`git filter-repo` 등으로 히스토리 재작성) — 단순 삭제 커밋으로는 공개 시 과거 커밋에서 노출됨
+- **현재 (비공개 개발 단계, 2026-11-04 결정)**: 저장소가 private이므로 가사 본문이 든 `data/songs.json`·`data/source/곡정보.xlsx`·`data/songs_index.json`과 개인 기록인 운영 사이드카(선곡표·인상·소감 로그)를 모두 git에 추적한다. 머신 간 동기화 수단을 git 하나로 통일하기 위한 의도적 선택이며, 로컬 머신 포맷으로 gitignore 데이터가 유실된 경험이 계기. 원본 PDF·페이지 이미지·크롤링 raw·OMR 산출물은 `.gitignore`로 계속 차단. 상세: [manuals/multi_machine.md](../manuals/multi_machine.md).
+- **저장소를 public으로 전환할 경우 (필수 선행 조치)**: 가사 본문과 개인 기록이 든 파일을 공개하면 안 된다. 전환 전에 반드시 다음을 수행.
+  1. `data/songs.json`·`data/source/곡정보.xlsx`·`data/songs_index.json`·운영 사이드카 3종을 `.gitignore`에 추가하고 추적 해제 (`git rm --cached`)
+  2. git 히스토리에 이미 들어간 가사 본문·개인 기록 제거 (`git filter-repo` 등으로 히스토리 재작성) — 단순 삭제 커밋으로는 공개 시 과거 커밋에서 노출됨
   3. `data/raw/audiveris_sample/` 등 악보 파생물도 공개 여부 재검토
-  4. README·멀티 머신 가이드의 "새 머신 셋업" 절차를 "songs.json을 로컬 빌드로 생성" 방식으로 갱신
+  4. 데이터 동기화를 git 외 수단(개인 클라우드 드라이브·private 데이터 저장소 등)으로 바꾸고 멀티 머신 가이드의 "새 머신 셋업"·"데이터 동기화" 절을 갱신
 
 ## 세션 연속성
 
