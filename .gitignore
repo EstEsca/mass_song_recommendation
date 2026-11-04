@@ -44,3 +44,6 @@ Thumbs.db
 *.tmp
 *.bak
 *.log
+
+# 라벨링 검토용 임시 파일 (가사 전문 포함, 검토 후 삭제)
+data/source/labeling_proposals/review_*.md
