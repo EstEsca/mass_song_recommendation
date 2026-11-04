@@ -4,13 +4,23 @@
 
 ## Quick Start
 
-새 세션 시작 시 다음 한 줄만 입력:
+**세션을 열면 먼저 저장소를 최신화한다** (여러 머신을 번갈아 쓰므로 필수):
+
+```bash
+git status                 # 지난 세션의 미커밋 변경이 없는지
+git pull origin master
+```
+
+규약 전체는 [docs/manuals/multi_machine.md](../manuals/multi_machine.md) 참조 (새 머신 셋업·데이터 동기화·브랜치·커밋 형식·종료 체크리스트).
+
+그 다음 한 줄만 입력:
 
 ```
 /quick-start
 ```
 
 `/quick-start` 스킬이 자동으로:
+0. `git status`·`git log`로 작업 트리와 최신 커밋 확인 (pull이 안 된 상태면 경고)
 1. `docs/tracker/sprints/CURRENT.md` → 활성 스프린트 본문 → 체크리스트 → `docs/status/STATUS.md` → `ISSUES.md` 순으로 읽고
 2. 진행도·미완 이슈·보류 스프린트를 요약해 보고
 3. 이번 세션에 할 만한 작업 2~3가지를 제안
@@ -48,6 +58,7 @@
 | 4 | docs/status/STATUS.md | 진행 수치·블로킹·최근 결정 |
 | 5 | docs/tracker/work_management.md | 이슈/고려사항/스프린트 관계 |
 | 6 | ISSUES.md | 구체적 할일 |
+| 7 | docs/manuals/multi_machine.md | 머신 간 git 동기화·브랜치·커밋 규약 (머신을 옮길 때) |
 
 **필요할 때만 추가로 읽기:**
 - `docs/spec/schema.md` — 스키마 작업 시
@@ -56,6 +67,7 @@
 - `docs/spec/decisions/*.md` — 결정 근거 확인 시
 - `docs/tracker/CONSIDERATIONS.md` — 미결정 아이디어 검토 시
 - `docs/manuals/server_runtime.md` — 서버 실행 시
+- `docs/manuals/multi_machine.md` — 머신을 옮기거나 새 머신을 셋업할 때
 - `docs/status/PROJECT.md` — 비전·아키텍처 재확인 시
 - `.claude/skills/*/SKILL.md` — 특정 스킬 동작 확인 시
 
@@ -81,6 +93,11 @@
    - 한 일 3~5줄
    - 다음 세션 사용자 액션 (있으면) 명시
 
+5. **커밋 + push** ([multi_machine.md §4-2](../manuals/multi_machine.md#4-2-종료-모든-머신-공통))
+   - 데이터를 바꿨으면 `python scripts/rebuild.py` 후 xlsx·songs.json·songs_index.json 함께 커밋
+   - 커밋 메시지는 Conventional Commits (`type(scope): 한국어 요약`)
+   - `git push` 까지 끝내고 세션을 닫는다. 클라우드 세션은 `claude/xxx` 브랜치로 push → 사용자가 로컬에서 master 병합
+
 ## 사용자가 세션을 끊을 때 요청 예
 
 ```
@@ -89,6 +106,7 @@
 2. STATUS.md를 지금 상태로 갱신
 3. 새 결정이 있었으면 ADR로 기록
 4. 오늘 한 일과 다음에 내가 할 일 요약
+5. 커밋하고 push (multi_machine.md 규약)
 ```
 
 ## 자주 사용되는 스킬 호출
@@ -115,6 +133,9 @@
 
 **Q. 스킬이 v1 시절처럼 동작한다**
 → deprecated 처리된 6개 중 하나일 수 있음. description의 `[DEPRECATED]` 표시 확인.
+
+**Q. 다른 머신에서 작업한 내용이 안 보인다 / pull이 거부된다**
+→ [docs/manuals/multi_machine.md](../manuals/multi_machine.md) 트러블슈팅. 보통 이전 머신에서 push를 안 했거나 이 머신에 미커밋 변경이 남은 것.
 
 **Q. 세션이 길어 느려짐**
 → `/clear` 또는 `/compact`로 정리 후, STATUS.md 갱신·새 세션으로 이어가기

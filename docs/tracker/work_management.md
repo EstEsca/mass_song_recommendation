@@ -108,6 +108,15 @@
 | 스프린트 완료 | 회고 + ISSUES.md 정리 + CURRENT.md 갱신 |
 | 분기 또는 3개월마다 | CONSIDERATIONS.md 재검토 (도입/폐기/스프린트 승격) |
 
+## git 운영 규약 (요약)
+
+여러 머신을 번갈아 쓰므로 작업 단위와 별개로 git 규약을 따른다. 상세는 [manuals/multi_machine.md](../manuals/multi_machine.md).
+
+- **세션 시작**: `git pull` 선행. **세션 종료**: 커밋 + `git push` 후 종료.
+- **브랜치**: 로컬은 `master` 직접, 큰 패치는 `feat/<주제>` → master, 클라우드 세션은 `claude/<주제>` → 사용자가 로컬 병합.
+- **커밋 메시지**: Conventional Commits — `type(scope): 한국어 요약`. type은 `feat`·`fix`·`docs`·`data`·`refactor`·`chore`, scope는 `S-NNN` 또는 영역.
+- **데이터**: `data/` 전부 커밋 대상. xlsx를 바꿨으면 `rebuild.py` 후 파생 JSON과 함께 커밋.
+
 ## 자주 묻는 질문
 
 **Q. 이슈는 반드시 어느 스프린트에 속해야 하나?**
@@ -129,4 +138,5 @@ A. 분기/3개월 단위 재검토에서 도입·폐기·승격 결정. 폐기�
 - [sprints/README.md](sprints/README.md) — 스프린트 정책
 - [sprints/CURRENT.md](sprints/CURRENT.md) — 현재 활성 스프린트
 - [sprints_checklist/README.md](sprints_checklist/README.md) — 체크리스트 정책
-- [manuals/README.md](manuals/README.md) — 절차 매뉴얼 (작업 단위 아님, 영구 가이드)
+- [manuals/README.md](../manuals/README.md) — 절차 매뉴얼 (작업 단위 아님, 영구 가이드)
+- [manuals/multi_machine.md](../manuals/multi_machine.md) — 멀티 머신 git 운영 규약

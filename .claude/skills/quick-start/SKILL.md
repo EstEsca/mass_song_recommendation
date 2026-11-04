@@ -12,6 +12,21 @@ argument-hint: ""
 
 ## 실행 흐름
 
+### Step 0: 저장소 상태 확인 (멀티 머신 규약)
+
+여러 머신이 번갈아 작업하므로 문서를 읽기 전에 Bash로 확인한다 ([docs/manuals/multi_machine.md](../../../docs/manuals/multi_machine.md)):
+
+```bash
+git status --short          # 미커밋 변경 유무
+git branch --show-current   # master 인지, claude/* 인지
+git fetch origin master && git log --oneline -1 origin/master && git log --oneline -1 HEAD
+```
+
+- 로컬 머신에서 HEAD가 `origin/master`보다 뒤처져 있고 작업 트리가 깨끗하면 → `git pull origin master`를 **실행**한다.
+- 미커밋 변경이 있으면 → 보고하고 사용자 결정(커밋/stash/폐기)을 기다린다. 임의로 pull·stash하지 않는다.
+- 클라우드 세션(`claude/*` 브랜치)은 pull 대신 "origin/master 최신 커밋이 기대한 것인가"만 보고한다.
+- 결과를 Step 2 보고의 맨 위 한 줄로 요약한다 (예: `git: master, origin과 동일, 작업 트리 깨끗` / `git: 미커밋 3개 파일 — 처리 필요`).
+
 ### Step 1: 핵심 파일 순차 읽기
 
 다음 순서로 Read:
@@ -36,6 +51,7 @@ argument-hint: ""
 ```
 ## 📍 현재 컨텍스트
 
+**git:** <브랜치>, <origin/master 대비 상태>, <작업 트리 상태>
 **활성 스프린트:** S-NNN <제목> (시작 YYYY-MM-DD)
 **최근 STATUS 갱신:** YYYY-MM-DD
 
@@ -78,12 +94,13 @@ argument-hint: ""
 
 ## 주의
 
-- **읽기 전용** — 어떤 파일도 수정하지 않음
+- **읽기 전용** — 어떤 파일도 수정하지 않음 (예외: Step 0의 `git pull` — 작업 트리가 깨끗할 때만)
 - **외부 호출 없음** — 순수 로컬
 - **장황 금지** — 보고는 한 화면. 자세한 내용은 사용자 후속 질문 시 추가 Read
 
 ## 관련
 
 - 가이드 원본: [docs/status/RESUME.md](../../../docs/status/RESUME.md)
+- 멀티 머신 규약: [docs/manuals/multi_machine.md](../../../docs/manuals/multi_machine.md)
 - 활성 스프린트: [docs/tracker/sprints/CURRENT.md](../../../docs/tracker/sprints/CURRENT.md)
 - 작업 관리 정책: [docs/tracker/work_management.md](../../../docs/tracker/work_management.md)

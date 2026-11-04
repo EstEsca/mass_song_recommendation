@@ -7,15 +7,8 @@
       "Bash(awk -F',' '$10~/accepted/{print $1,$2,$7,$8,$10}')",
       "Bash(awk -F',' 'NR>1 && $7>=4 && $4==\"\" {print $1, $2, $7, $8, $9, $10}' data/raw/조표_자동추정.csv)",
       "Bash(awk -F',' 'NR>1 && $4!=\"\" && $6+0>=0.85' data/raw/조표_자동추정.csv)",
-      "WebFetch(domain:github.com)",
       "WebFetch(domain:audiveris.github.io)",
-      "Bash(winget search *)",
-      "Bash(winget install *)",
-      "Bash(where audiveris *)",
-      "Read(//c/Program Files/Audiveris/**)",
-      "Bash(\"C:/Program Files/Audiveris/Audiveris.exe\" -version)",
-      "Bash(\"C:/Program Files/Audiveris/Audiveris.exe\" -help)",
-      "Bash(\"C:/Program Files/Audiveris/Audiveris.exe\" -batch -transcribe -export -output data/raw/audiveris_sample -sheets 90 95 138 168 274 -- archive/source/청소년청년성가집.pdf)"
+      "WebFetch(domain:github.com)"
     ]
   }
 }

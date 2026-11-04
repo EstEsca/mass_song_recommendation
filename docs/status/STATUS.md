@@ -1,6 +1,6 @@
 # 프로젝트 현재 상태
 
-**마지막 갱신:** 2026-04-25
+**마지막 갱신:** 2026-11-04
 **현재 Phase:** 운영 도구 안정화 + 색인 라벨링 (Phase 2/3 사이)
 
 ## 진행 수치
@@ -27,11 +27,13 @@
 
 ## 활성 스프린트
 
-**[S-007 곡 스키마 확장 및 데이터 추가 정리](../tracker/sprints/S-007-스키마-확장-데이터-추가.md)**
-- 대표 작업: 조표(key signature) 데이터 추가
-- 체크리스트: [../tracker/sprints_checklist/S-007-스키마-확장-데이터-추가.md](../tracker/sprints_checklist/S-007-스키마-확장-데이터-추가.md)
+**[S-012 출력 양식 프리셋](../tracker/sprints/S-012-출력-양식-프리셋.md)** (2026-04-30 활성화, 체크리스트 전 항목 미착수)
+- 대표 작업: 한 달치 추천 결과 → Google Sheets·마크다운 프리셋
+- 체크리스트: [../tracker/sprints_checklist/S-012-출력-양식-프리셋.md](../tracker/sprints_checklist/S-012-출력-양식-프리셋.md)
 
-**보류**: [S-003](../tracker/sprints/S-003-가사-완전복구.md), [S-009](../tracker/sprints/S-009-출력-표-양식-도구.md)
+**보류**: [S-003](../tracker/sprints/S-003-가사-완전복구.md), [S-007](../tracker/sprints/S-007-스키마-확장-데이터-추가.md), [S-009](../tracker/sprints/S-009-출력-표-양식-도구.md), [S-010](../tracker/sprints/S-010-파일-관리-프로세스-리팩터링-후-수습.md)
+
+(활성 스프린트의 기준은 항상 [sprints/CURRENT.md](../tracker/sprints/CURRENT.md). 이 섹션은 2026-11-04에 CURRENT.md와 맞춤.)
 
 ## 다음 작업 (우선순위 순)
 
@@ -42,11 +44,13 @@
 
 ## 블로킹/이슈
 
-- 🚧 없음 (현재 외부 대기 없음)
+- ⚠️ **2026-11-04 데이터 유실·복구**: 운영 Windows 머신 포맷으로 gitignore였던 xlsx·사이드카·PDF 유실. `songs.json`에서 `곡정보.xlsx`·`songs_index.json` 완전 복구(라운드트립 검증 완료). 선곡표·소감 로그는 빈 파일로 초기화, 원본 PDF는 사용자 재배치 필요(#39, #40). 상세: [manuals/multi_machine.md](../manuals/multi_machine.md#배경-2026-11-04-데이터-유실과-복구)
+- 🚧 그 외 외부 대기 없음
 - ⚠️ **모드 B 정확도**는 색인 라벨링 완료에 의존 (#36이 핵심 변수)
 
 ## 최근 결정사항
 
+- 2026-11-04: **멀티 머신 git 운영 규약 채택** ([manuals/multi_machine.md](../manuals/multi_machine.md)) — 데이터 파일 gitignore 해제(git이 유일한 동기화 수단), master 직접 + pull 선행, 클라우드는 `claude/*` → 로컬 병합, Conventional Commits, Windows 전용 권한은 `settings.local.json`
 - 2026-04-25: **schema v2.0 채택** ([ADR-006](../spec/decisions/ADR-006-schema-v2.md)) — 신뢰도·외부ID·가사 중첩 제거, 색인 8카테고리, xlsx SSoT, 3계층 분업
 - 2026-04-25: **가사 스킬 9종 정리** — 핵심 3종(clean/crawl/structure) 리팩토링, 6종 deprecated
 - 2026-04-25: **추천 스킬 모드 B 도입** — Python 후보 필터(`filter_candidates.py`) + Wide TSV 직렬화로 토큰 ~75% 감축

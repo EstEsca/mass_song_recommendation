@@ -18,7 +18,8 @@
 
 | 매뉴얼 | 주제 | 갱신일 |
 |---|---|---|
-| [server_runtime.md](server_runtime.md) | 어시스턴트 + 편집기 서버 실행·접속·트러블슈팅 | 2026-04-25 |
+| [multi_machine.md](multi_machine.md) | 멀티 머신 운영: 새 머신 셋업·데이터 git 동기화·브랜치/커밋 규약·세션 시작/종료 체크리스트 | 2026-11-04 |
+| [server_runtime.md](server_runtime.md) | 어시스턴트 + 편집기 서버 실행·접속·트러블슈팅 | 2026-11-04 |
 
 ## 작성 규칙
 
