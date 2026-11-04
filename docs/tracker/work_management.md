@@ -113,7 +113,7 @@
 여러 머신을 번갈아 쓰므로 작업 단위와 별개로 git 규약을 따른다. 상세는 [manuals/multi_machine.md](../manuals/multi_machine.md).
 
 - **세션 시작**: `git pull` 선행. **세션 종료**: 커밋 + `git push` 후 종료.
-- **브랜치**: 로컬은 `master` 직접, 큰 패치는 `feat/<주제>` → master, 클라우드 세션은 `claude/<주제>` → 사용자가 로컬 병합.
+- **브랜치**: 로컬은 `master` 직접, 큰 패치는 `feat/<주제>` → master, 클라우드 세션은 `claude/<주제>` → master에 ff 병합(요청 시 세션이 직접).
 - **커밋 메시지**: Conventional Commits — `type(scope): 한국어 요약`. type은 `feat`·`fix`·`docs`·`data`·`refactor`·`chore`, scope는 `S-NNN` 또는 영역.
 - **데이터**: `data/` 전부 커밋 대상. xlsx를 바꿨으면 `rebuild.py` 후 파생 JSON과 함께 커밋.
 

@@ -18,7 +18,7 @@
 | 동기화 수단 | **git만** 사용. 클라우드 드라이브·USB 복사 금지 |
 | 기본 브랜치 | `master`. 로컬 머신은 master 직접 커밋 |
 | 큰 패치 | 작업 브랜치 → master 병합 (선택) |
-| 클라우드 세션 | `claude/<주제>` 브랜치에서 작업 → 사용자가 master에 병합 |
+| 클라우드 세션 | `claude/<주제>` 브랜치에서 작업 → 종료 시 master에 fast-forward 병합 (사용자가 "합쳐줘"라고 하면 세션이 직접, 아니면 로컬에서) |
 | 세션 시작 | `git pull` 선행 + 작업 트리 깨끗한지 확인 |
 | 세션 종료 | 즉시 커밋 + `git push`. 미푸시 상태로 머신을 떠나지 않는다 |
 | 커밋 메시지 | Conventional Commits (`type(scope): 한국어 요약`) |
@@ -135,7 +135,7 @@ python scripts/rebuild.py                  # songs.json·songs_index.json 재생
 
 - **로컬 머신(Windows·다른 PC): master 직접 커밋.** 1인 프로젝트라 브랜치 오버헤드가 과하다.
 - **큰 패치(스키마 변경, 스킬 대규모 재작성 등)**: `feat/<주제>` 브랜치에서 작업하고 끝나면 master에 병합. 병합 전 `git pull origin master`로 최신화. 필수가 아니라 선택.
-- **클라우드 세션: `claude/<주제>` 브랜치.** 클라우드 세션은 master에 직접 푸시하지 않는다. 종료 후 사용자가 로컬에서 병합한다 (3-3).
+- **클라우드 세션: `claude/<주제>` 브랜치.** 작업 중에는 이 브랜치에 푸시하고, 끝나면 master에 **fast-forward로만** 병합한다. 사용자가 세션에 "master에 합쳐줘"라고 하면 세션이 직접 수행하고(3-3), 그렇지 않으면 사용자가 로컬에서 한다.
 - master는 항상 "어느 머신에서 clone해도 바로 돌아가는 상태"를 유지한다. 깨진 중간 상태는 브랜치에 둔다.
 
 ### 3-2. 커밋 메시지: Conventional Commits
@@ -170,7 +170,15 @@ chore: Windows 전용 권한을 settings.local.json으로 이동
 
 ### 3-3. 클라우드 세션 브랜치 병합
 
-클라우드 세션이 `claude/xxx`를 푸시하고 끝났을 때, 로컬 머신에서:
+**(a) 클라우드 세션이 직접** — 사용자가 "master에 합쳐줘"라고 요청했을 때. 세션은 ff 가능 여부를 먼저 확인하고, ff가 안 되면(그 사이 다른 머신이 master에 푸시) 병합하지 않고 보고한다.
+
+```bash
+git fetch origin master
+git merge-base --is-ancestor origin/master HEAD && git push origin HEAD:master   # ff만 허용
+git push origin --delete claude/xxx                                             # 정리 (선택)
+```
+
+**(b) 로컬 머신에서** — 세션에 요청하지 않았거나 PR 검토를 거친 뒤:
 
 ```bash
 git fetch origin

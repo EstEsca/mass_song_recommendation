@@ -96,7 +96,7 @@ git pull origin master
 5. **커밋 + push** ([multi_machine.md §4-2](../manuals/multi_machine.md#4-2-종료-모든-머신-공통))
    - 데이터를 바꿨으면 `python scripts/rebuild.py` 후 xlsx·songs.json·songs_index.json 함께 커밋
    - 커밋 메시지는 Conventional Commits (`type(scope): 한국어 요약`)
-   - `git push` 까지 끝내고 세션을 닫는다. 클라우드 세션은 `claude/xxx` 브랜치로 push → 사용자가 로컬에서 master 병합
+   - `git push` 까지 끝내고 세션을 닫는다. 클라우드 세션은 `claude/xxx` 브랜치로 push 후 사용자 요청 시 master에 ff 병합
 
 ## 사용자가 세션을 끊을 때 요청 예
 
