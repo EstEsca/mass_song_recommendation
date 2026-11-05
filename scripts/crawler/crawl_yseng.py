@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import json
 import re
+import os
 import ssl
 import sys
 import time
@@ -32,7 +33,10 @@ from _merge import (
     load_songs, save_songs, should_skip, apply_lyrics, print_report,
 )
 
-BASE = "http://yseng.kr"
+# 기본은 http (자체서명 인증서 때문). 프록시 환경 등에서 https가 필요하면
+#   YSENG_BASE=https://yseng.kr YSENG_CAFILE=<서버 인증서 PEM> 으로 실행한다.
+# YSENG_CAFILE이 주어지면 그 인증서에 **핀 고정**해 검증한다(CERT_NONE보다 안전).
+BASE = os.environ.get("YSENG_BASE", "http://yseng.kr")
 SEARCH_URL = BASE + "/xe/?mid=sungga&search_target=title&search_keyword={kw}&page={page}"
 DOC_URL = BASE + "/xe/sungga/{srl}"
 USER_AGENT = "SungaLiturgyBot/1.0 (Korean Catholic liturgy; non-commercial)"
@@ -49,6 +53,29 @@ OUTPUT_FILE = OUTPUT_DIR / "yseng_sungga.jsonl"
 SSL_CTX = ssl.create_default_context()
 SSL_CTX.check_hostname = False
 SSL_CTX.verify_mode = ssl.CERT_NONE
+
+# 인증서 핀 고정: YSENG_PIN_SHA256=<서버 인증서 SHA-256 지문(콜론 없이)> 를 주면
+# 연결마다 서버 인증서 지문을 대조하고 불일치 시 연결을 끊는다.
+# (서버 인증서가 CA 플래그 없는 자체서명 leaf라 cafile 방식은 쓸 수 없음)
+_PIN = (os.environ.get("YSENG_PIN_SHA256") or "").replace(":", "").lower()
+if _PIN:
+    import hashlib
+    import http.client
+
+    class _PinnedHTTPSConnection(http.client.HTTPSConnection):
+        def connect(self):
+            super().connect()
+            der = self.sock.getpeercert(binary_form=True)
+            fp = hashlib.sha256(der).hexdigest()
+            if fp != _PIN:
+                self.close()
+                raise ssl.SSLError(f"certificate pin mismatch: {fp[:16]}... != {_PIN[:16]}...")
+
+    class _PinnedHTTPSHandler(urllib.request.HTTPSHandler):
+        def https_open(self, req):
+            return self.do_open(lambda host, **kw: _PinnedHTTPSConnection(host, context=SSL_CTX, **kw), req)
+
+    urllib.request.install_opener(urllib.request.build_opener(_PinnedHTTPSHandler()))
 
 
 def fetch(url: str) -> str:
