@@ -1,8 +1,8 @@
 {
   "metadata": {
     "schema_version": "2.1",
-    "built_from_sha256": "30b945adde14693078e40f4e96ba1ceb5a42758e73b05b0dd19618aa6ea1f4ed",
-    "built_at": "2026-11-05T06:12:09",
+    "built_from_sha256": "ee28c67b029de6819812d902d93da4ef3d1fac0a83c8ba335cddd07804ac6fc5",
+    "built_at": "2026-11-05T06:12:10",
     "total_songs": 495
   },
   "songs": {
@@ -8650,7 +8650,6 @@
       "색인": {
         "요약": "주님을 기다렸더니 수렁에서 건져 바위에 세우시니 제물보다 당신 뜻을 따르려 왔다는 시편 40편 노래.",
         "성경": [
-          "시편42",
           "시편40:2-9"
         ],
         "성월": [],
